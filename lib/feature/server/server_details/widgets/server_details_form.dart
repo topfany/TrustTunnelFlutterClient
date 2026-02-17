@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:trusttunnel/common/assets/asset_icons.dart';
 import 'package:trusttunnel/common/error/model/enum/presentation_field_name.dart';
 import 'package:trusttunnel/common/error/model/presentation_field.dart';
 import 'package:trusttunnel/common/localization/extensions/locale_enum_extension.dart';
@@ -11,6 +12,7 @@ import 'package:trusttunnel/common/utils/routing_profile_utils.dart';
 import 'package:trusttunnel/feature/server/server_details/model/server_details_data.dart';
 import 'package:trusttunnel/feature/server/server_details/widgets/scope/server_details_scope.dart';
 import 'package:trusttunnel/feature/server/server_details/widgets/scope/server_details_scope_aspect.dart';
+import 'package:trusttunnel/widgets/buttons/custom_icon_button.dart';
 import 'package:trusttunnel/widgets/inputs/custom_text_field.dart';
 import 'package:trusttunnel/widgets/menu/custom_dropdown_menu.dart';
 
@@ -168,6 +170,43 @@ class _ServerDetailsFormState extends State<ServerDetailsForm> {
             PresentationFieldName.dnsServers,
           ),
         ),
+        CustomTextField(
+          value: _formData.tlsPrefix,
+          hint: context.ln.clientRandomHint,
+          label: context.ln.clientRandomLabel,
+          helper: context.ln.clientRandomHelper,
+          counter: const SizedBox.shrink(),
+          minLines: 1,
+          maxLines: 4,
+          maxLength: 64,
+          onChanged: (tls) => _onDataChanged(
+            context,
+            clientRandom: tls,
+          ),
+          error: ValidationUtils.getErrorString(
+            context,
+            _fieldErrors,
+            PresentationFieldName.clientRandom,
+          ),
+        ),
+        CustomTextField.customSuffixIcon(
+          value: _formData.dnsServers.join('\n'),
+          label: context.ln.pemLabel,
+          readOnly: true,
+          suffixIcon: CustomIconButton(
+            onPressed: () {},
+            icon: AssetIcons.attach,
+          ),
+          onChanged: (dns) => _onDataChanged(
+            context,
+            dnsServers: dns.trim().split('\n'),
+          ),
+          error: ValidationUtils.getErrorString(
+            context,
+            _fieldErrors,
+            PresentationFieldName.clientRandom,
+          ),
+        ),
       ],
     ),
   );
@@ -176,6 +215,10 @@ class _ServerDetailsFormState extends State<ServerDetailsForm> {
       availableRoutingProfiles.firstWhereOrNull((profile) => profile.id == routingProfileId) ??
       availableRoutingProfiles.firstWhere((profile) => profile.id == RoutingProfileUtils.defaultRoutingProfileId);
 
+  void _onSelectPemCertificatePressed(
+    BuildContext context,
+  ) {}
+
   void _onDataChanged(
     BuildContext context, {
     String? serverName,
@@ -183,6 +226,8 @@ class _ServerDetailsFormState extends State<ServerDetailsForm> {
     String? domain,
     String? username,
     String? password,
+    String? clientRandom,
+    bool? enableIpv6,
     VpnProtocol? protocol,
     int? routingProfileId,
     List<String>? dnsServers,
@@ -197,6 +242,8 @@ class _ServerDetailsFormState extends State<ServerDetailsForm> {
         username: username,
         password: password,
         protocol: protocol,
+        clientRandom: clientRandom,
+        enableIpv6: enableIpv6,
         routingProfileId: routingProfileId,
         dnsServers: dnsServers,
       );

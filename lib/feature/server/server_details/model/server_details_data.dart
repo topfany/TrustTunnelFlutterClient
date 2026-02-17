@@ -70,6 +70,8 @@ class ServerDetailsData {
   /// The list is expected to be treated as immutable by callers.
   final List<String> dnsServers;
 
+  final String? tlsPrefix;
+
   /// {@macro server_details_data}
   const ServerDetailsData({
     this.serverName = '',
@@ -80,6 +82,7 @@ class ServerDetailsData {
     this.protocol = VpnProtocol.http2,
     this.routingProfileId = RoutingProfileUtils.defaultRoutingProfileId,
     this.dnsServers = const <String>[],
+    this.tlsPrefix,
   });
 
   @override
@@ -91,6 +94,7 @@ class ServerDetailsData {
     password,
     protocol,
     routingProfileId,
+    tlsPrefix,
     Object.hashAll(dnsServers),
   );
 
@@ -103,6 +107,7 @@ class ServerDetailsData {
       'username: $username, '
       'protocol: $protocol, '
       'routingProfileId: $routingProfileId, '
+      'tlsPrefix: $tlsPrefix, '
       'dnsServers: $dnsServers'
       ')';
 
@@ -118,6 +123,7 @@ class ServerDetailsData {
         other.password == password &&
         other.protocol == protocol &&
         other.routingProfileId == routingProfileId &&
+        other.tlsPrefix == tlsPrefix &&
         listEquals(other.dnsServers, dnsServers);
   }
 
@@ -130,6 +136,7 @@ class ServerDetailsData {
     VpnProtocol? protocol,
     int? routingProfileId,
     List<String>? dnsServers,
+    String? tlsPrefix,
   }) => ServerDetailsData(
     serverName: serverName ?? this.serverName,
     ipAddress: ipAddress ?? this.ipAddress,
@@ -138,6 +145,7 @@ class ServerDetailsData {
     password: password ?? this.password,
     protocol: protocol ?? this.protocol,
     routingProfileId: routingProfileId ?? this.routingProfileId,
+    tlsPrefix: tlsPrefix ?? this.tlsPrefix,
     dnsServers: dnsServers ?? this.dnsServers,
   );
 }

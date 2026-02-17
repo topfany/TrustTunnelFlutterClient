@@ -25,6 +25,7 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
   final SpellCheckService? spellCheckService;
+  final Widget? counter;
 
   const CustomTextField({
     super.key,
@@ -46,6 +47,7 @@ class CustomTextField extends StatefulWidget {
     this.onChanged,
     this.validator,
     this.spellCheckService,
+    this.counter,
   }) : suffixIcon = null,
        assert(
          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
@@ -72,6 +74,7 @@ class CustomTextField extends StatefulWidget {
     this.onChanged,
     this.validator,
     this.spellCheckService,
+    this.counter,
   }) : showClearButton = false,
        assert(suffixIcon != null),
        assert(
@@ -149,6 +152,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             helperText: widget.helper,
             labelText: widget.label,
             errorText: widget.error,
+            counter: widget.counter,
             errorMaxLines: 3,
             suffixIcon: Padding(
               padding: const EdgeInsets.all(4),

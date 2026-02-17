@@ -81,12 +81,21 @@ final class ServerDetailsController extends BaseStateController<ServerDetailsSta
     );
   }
 
+  void pickPemCertificate() {
+    handle(() {
+      
+    });
+  }
+
   void dataChanged({
     String? serverName,
     String? ipAddress,
     String? domain,
     String? username,
     String? password,
+    String? clientRandom,
+    bool? enableIpv6,
+    String? pathToPemFile,
     VpnProtocol? protocol,
     int? routingProfileId,
     List<String>? dnsServers,

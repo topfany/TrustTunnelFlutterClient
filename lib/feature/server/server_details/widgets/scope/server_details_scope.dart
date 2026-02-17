@@ -64,6 +64,7 @@ class _ServerDetailsScopeState extends State<ServerDetailsScope> {
       submit: _controller.submit,
       editing: widget.serverId != null,
       id: widget.serverId,
+      pickPemCertificate: () {},
       child: widget.child,
     ),
   );
@@ -87,6 +88,7 @@ class _InheritedServerDetailsScope extends InheritedModel<ServerDetailsScopeAspe
     required this.submit,
     required this.editing,
     required this.id,
+    required this.pickPemCertificate,
     required super.child,
   }) : _state = state;
 
@@ -101,6 +103,9 @@ class _InheritedServerDetailsScope extends InheritedModel<ServerDetailsScopeAspe
 
   @override
   final void Function() fetchServer;
+
+  @override
+  final void Function() pickPemCertificate;
 
   @override
   final void Function(ValueChanged<String> onSaved) delete;
@@ -120,8 +125,6 @@ class _InheritedServerDetailsScope extends InheritedModel<ServerDetailsScopeAspe
   @override
   PresentationError? get error => _state.error;
 
-  // TODO: Rework it later
-  // Konstantin Gorynin <k.gorynin@adguard.com>, 14 December 2025
   @override
   bool get loading => _state.loading || routingProfiles.isEmpty;
 

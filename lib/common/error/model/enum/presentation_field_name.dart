@@ -6,6 +6,7 @@ enum PresentationFieldName {
   userName,
   password,
   dnsServers,
+  clientRandom,
   rule,
   url,
 }

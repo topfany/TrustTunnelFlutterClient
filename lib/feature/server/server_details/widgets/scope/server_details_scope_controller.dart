@@ -12,6 +12,9 @@ typedef DataChangedCallback =
       String? domain,
       String? username,
       String? password,
+      String? clientRandom,
+      bool? enableIpv6,
+      String? pathToPemFile,
       VpnProtocol? protocol,
       int? routingProfileId,
       List<String>? dnsServers,
@@ -39,4 +42,6 @@ abstract class ServerDetailsScopeController {
   abstract final void Function(ValueChanged<String> onSaved) submit;
 
   abstract final void Function(ValueChanged<String> onSaved) delete;
+
+  abstract final void Function() pickPemCertificate;
 }
