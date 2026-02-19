@@ -10,7 +10,6 @@ sealed class ServerDetailsState {
   final ServerDetailsData data;
   final ServerDetailsData initialData;
   final List<PresentationField> fieldErrors;
-
   final List<RoutingProfile> routingProfiles;
 
   const ServerDetailsState._({

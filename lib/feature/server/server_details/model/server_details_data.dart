@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
+import 'package:trusttunnel/common/models/value_data.dart';
+import 'package:trusttunnel/data/model/certificate.dart';
 import 'package:trusttunnel/data/model/vpn_protocol.dart';
 import 'package:trusttunnel/common/utils/routing_profile_utils.dart';
 
@@ -70,7 +72,9 @@ class ServerDetailsData {
   /// The list is expected to be treated as immutable by callers.
   final List<String> dnsServers;
 
-  final String? tlsPrefix;
+  final String tlsPrefix;
+
+  final Certificate? certificate;
 
   /// {@macro server_details_data}
   const ServerDetailsData({
@@ -82,7 +86,8 @@ class ServerDetailsData {
     this.protocol = VpnProtocol.http2,
     this.routingProfileId = RoutingProfileUtils.defaultRoutingProfileId,
     this.dnsServers = const <String>[],
-    this.tlsPrefix,
+    this.tlsPrefix = '',
+    this.certificate,
   });
 
   @override
@@ -95,6 +100,7 @@ class ServerDetailsData {
     protocol,
     routingProfileId,
     tlsPrefix,
+    certificate,
     Object.hashAll(dnsServers),
   );
 
@@ -108,6 +114,7 @@ class ServerDetailsData {
       'protocol: $protocol, '
       'routingProfileId: $routingProfileId, '
       'tlsPrefix: $tlsPrefix, '
+      'certificate: $certificate, '
       'dnsServers: $dnsServers'
       ')';
 
@@ -124,6 +131,7 @@ class ServerDetailsData {
         other.protocol == protocol &&
         other.routingProfileId == routingProfileId &&
         other.tlsPrefix == tlsPrefix &&
+        other.certificate == certificate &&
         listEquals(other.dnsServers, dnsServers);
   }
 
@@ -136,6 +144,7 @@ class ServerDetailsData {
     VpnProtocol? protocol,
     int? routingProfileId,
     List<String>? dnsServers,
+    ValueData<Certificate>? certificate,
     String? tlsPrefix,
   }) => ServerDetailsData(
     serverName: serverName ?? this.serverName,
@@ -147,5 +156,6 @@ class ServerDetailsData {
     routingProfileId: routingProfileId ?? this.routingProfileId,
     tlsPrefix: tlsPrefix ?? this.tlsPrefix,
     dnsServers: dnsServers ?? this.dnsServers,
+    certificate: certificate == null ? this.certificate : certificate.value,
   );
 }

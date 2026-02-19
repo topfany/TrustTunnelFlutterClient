@@ -1,6 +1,10 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:trusttunnel/common/theme/light_theme.dart';
+import 'package:trusttunnel/common/utils/certificate_decoder.dart';
 import 'package:trusttunnel/data/database/app_database.dart' as db;
+import 'package:trusttunnel/data/datasources/certificate_datasource.dart';
+import 'package:trusttunnel/data/datasources/local_sources/certificate_datasource_impl.dart';
 import 'package:trusttunnel/data/datasources/local_sources/routing_datasource_impl.dart';
 import 'package:trusttunnel/data/datasources/local_sources/server_datasource_impl.dart';
 import 'package:trusttunnel/data/datasources/local_sources/settings_datasource_impl.dart';
@@ -24,6 +28,8 @@ abstract class DependencyFactory {
 
   VpnDataSource get vpnDataSource;
 
+  CertificateDataSource get certificateDataSource;
+
   db.AppDatabase get database;
 }
 
@@ -39,6 +45,8 @@ class DependencyFactoryImpl implements DependencyFactory {
   RoutingDataSource? _routingDataSource;
 
   VpnDataSource? _vpnDataSource;
+
+  CertificateDataSource? _certificateDataSource;
 
   db.AppDatabase? _database;
 
@@ -59,6 +67,12 @@ class DependencyFactoryImpl implements DependencyFactory {
 
   @override
   VpnDataSource get vpnDataSource => _vpnDataSource ??= VpnDataSourceImpl(vpnPlugin: vpnPlugin);
+
+  @override
+  CertificateDataSource get certificateDataSource => _certificateDataSource ??= CertificateDataSourceImpl(
+    filePicker: FilePicker.platform,
+    decoder: const RawCertificateDecoder(),
+  );
 
   @override
   db.AppDatabase get database => _database ??= db.AppDatabase();

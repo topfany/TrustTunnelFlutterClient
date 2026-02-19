@@ -64,7 +64,7 @@ class _ServerDetailsScopeState extends State<ServerDetailsScope> {
       submit: _controller.submit,
       editing: widget.serverId != null,
       id: widget.serverId,
-      pickPemCertificate: () {},
+      pickPemCertificate: _controller.pickPemCertificate,
       child: widget.child,
     ),
   );

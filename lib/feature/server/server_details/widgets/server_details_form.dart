@@ -194,7 +194,7 @@ class _ServerDetailsFormState extends State<ServerDetailsForm> {
           label: context.ln.pemLabel,
           readOnly: true,
           suffixIcon: CustomIconButton(
-            onPressed: () {},
+            onPressed: () => _onSelectPemCertificatePressed(context),
             icon: AssetIcons.attach,
           ),
           onChanged: (dns) => _onDataChanged(
@@ -217,7 +217,7 @@ class _ServerDetailsFormState extends State<ServerDetailsForm> {
 
   void _onSelectPemCertificatePressed(
     BuildContext context,
-  ) {}
+  ) => ServerDetailsScope.controllerOf(context, listen: false).pickPemCertificate();
 
   void _onDataChanged(
     BuildContext context, {

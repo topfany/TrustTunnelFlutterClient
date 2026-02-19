@@ -4,6 +4,7 @@ import 'package:trusttunnel/common/error/error_utils.dart';
 import 'package:trusttunnel/common/error/model/presentation_base_error.dart';
 import 'package:trusttunnel/common/error/model/presentation_error.dart';
 import 'package:trusttunnel/common/error/model/presentation_field.dart';
+import 'package:trusttunnel/common/models/value_data.dart';
 import 'package:trusttunnel/data/model/vpn_protocol.dart';
 import 'package:trusttunnel/data/repository/routing_repository.dart';
 import 'package:trusttunnel/data/repository/server_repository.dart';
@@ -81,11 +82,36 @@ final class ServerDetailsController extends BaseStateController<ServerDetailsSta
     );
   }
 
-  void pickPemCertificate() {
-    handle(() {
-      
-    });
-  }
+  void pickPemCertificate() => handle(
+    () async {
+      setState(
+        ServerDetailsState.loading(
+          data: state.data,
+          initialData: state.initialData,
+          fieldErrors: state.fieldErrors,
+          routingProfiles: state.routingProfiles,
+        ),
+      );
+      final certificate = await _repository.pickCertificate();
+      if (certificate == null) {
+        return;
+      }
+      setState(
+        ServerDetailsState.idle(
+          data: state.data.copyWith(
+            certificate: ValueData(
+              certificate,
+            ),
+          ),
+          initialData: state.initialData,
+          fieldErrors: state.fieldErrors,
+          routingProfiles: state.routingProfiles,
+        ),
+      );
+    },
+    errorHandler: _onError,
+    completionHandler: _onCompleted,
+  );
 
   void dataChanged({
     String? serverName,
