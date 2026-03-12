@@ -150,11 +150,10 @@ class ServerDetailsServiceImpl implements ServerDetailsService {
     final allowableRegex = RegExp(ValidationUtils.allowableStartRegex);
 
     for (var dnsServer in dnsServers) {
-      
       final rawServer = dnsServer;
       if (allowableRegex.hasMatch(dnsServer)) {
         final parsedUri = Uri.tryParse(dnsServer);
-        if (parsedUri != null) {
+        if (parsedUri != null && parsedUri.host.isNotEmpty) {
           dnsServer = parsedUri.host + (parsedUri.hasPort ? ':${parsedUri.port}' : '');
         }
       }
