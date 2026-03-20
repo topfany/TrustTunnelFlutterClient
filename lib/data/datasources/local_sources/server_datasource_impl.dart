@@ -37,6 +37,7 @@ class ServerDataSourceImpl implements ServerDataSource {
         password: request.password,
         vpnProtocolId: request.vpnProtocol.value,
         routingProfileId: request.routingProfileId,
+        customSni: Value(request.customSni),
       ),
     );
 
@@ -59,6 +60,7 @@ class ServerDataSourceImpl implements ServerDataSource {
       vpnProtocol: request.vpnProtocol,
       routingProfileId: request.routingProfileId,
       dnsServers: request.dnsServers,
+      customSni: request.customSni,
     );
   }
 
@@ -93,6 +95,7 @@ class ServerDataSourceImpl implements ServerDataSource {
             dnsServers: dnsByServer[e.id] ?? const <String>[],
             routingProfileId: e.routingProfileId,
             selected: e.selected,
+            customSni: e.customSni,
           ),
         )
         .toList();
@@ -139,6 +142,7 @@ class ServerDataSourceImpl implements ServerDataSource {
         password: Value(request.password),
         vpnProtocolId: Value(request.vpnProtocol.value),
         routingProfileId: Value(request.routingProfileId),
+        customSni: Value(request.customSni),
       ),
     );
   }
@@ -165,6 +169,7 @@ class ServerDataSourceImpl implements ServerDataSource {
       dnsServers: dnsServers.map((e) => e.data).toList(),
       routingProfileId: server.routingProfileId,
       selected: server.selected,
+      customSni: server.customSni,
     );
   }
 

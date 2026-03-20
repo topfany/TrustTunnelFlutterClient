@@ -116,6 +116,8 @@ final class Endpoint {
   /// {@endtemplate}
   final bool skipVerification;
 
+  final String? customSni;
+
   /// {@macro endpoint}
   ///
   /// Defaults are intentionally permissive:
@@ -137,5 +139,6 @@ final class Endpoint {
     required this.username,
     required this.password,
     required this.upStreamProtocol,
+    required this.customSni,
   });
 }

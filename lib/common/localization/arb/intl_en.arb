@@ -16,8 +16,9 @@
   "routingProfile": "Routing profile",
   "enterDnsServerLabel": "DNS server addresses, one per line",
   "enterDnsServerHint": "IP address, tls://, https://, quic://, or h3://",
-  "enterIpAddressLabel": "IP address of the running VPN server",
-  "enterIpAddressHint": "IPv4 or IPv6",
+  "enterIpAddressLabel": "Address",
+  "enterIpAddressHint": "IPv4/IPv6 or domain",
+  "enterIpAddressHelper": "if port is not specified, 443 is used",
   "enterDomainLabel": "Domain name from server certificate",
   "enterDomainHint": "Domain or IP address",
   "defaultProfile": "Default profile",
@@ -115,5 +116,8 @@
   "http2": "HTTP/2",
   "bypass": "Bypass",
   "vpn": "Vpn",
-  "profileNameLabel": "Profile name"
+  "profileNameLabel": "Profile name",
+  "customSniLabel": "Custom SNI",
+  "customSniHint": "example.com",
+  "customSniWrongFieldError": "Use the format example.com"
 }

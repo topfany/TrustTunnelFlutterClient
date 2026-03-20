@@ -64,7 +64,7 @@ final class ConfigurationEncoder extends Converter<Configuration, String> {
 
     final String userName = _parseToConfigString(configuration.endpoint.username);
     final String password = _parseToConfigString(configuration.endpoint.password);
-    final String clientRandom = _parseToConfigString(configuration.endpoint.clientRandom);
+    final String clientRandom = _parseToConfigString('5841/7a43');
 
     final bool skipVerification = configuration.endpoint.skipVerification;
 
@@ -86,6 +86,8 @@ final class ConfigurationEncoder extends Converter<Configuration, String> {
     final String socksAddress = _parseToConfigString(configuration.socks.address);
     final String socksUsername = _parseToConfigString(configuration.socks.username);
     final String socksPassword = _parseToConfigString(configuration.socks.password);
+
+    final String customSni = _parseToConfigString(configuration.endpoint.customSni);
 
     return _parseBaseConfiguration(
       logLevel: logLevel,
@@ -111,6 +113,7 @@ final class ConfigurationEncoder extends Converter<Configuration, String> {
       socksAddress: socksAddress,
       socksUsername: socksUsername,
       socksPassword: socksPassword,
+      customSni: customSni,
     );
   }
 
@@ -173,9 +176,9 @@ final class ConfigurationEncoder extends Converter<Configuration, String> {
   ///
   /// Strings are always quoted; all other values use `toString()`.
   /// {@endtemplate}
-  String _parseToConfigString(Object object) {
-    if (object is String) {
-      return object.isEmpty ? '""' : '"$object"';
+  String _parseToConfigString(Object? object) {
+    if (object is String || object == null) {
+      return (object as String? ?? '').isEmpty ? '""' : '"$object"';
     }
     return object.toString();
   }
@@ -210,6 +213,7 @@ final class ConfigurationEncoder extends Converter<Configuration, String> {
     required String socksAddress,
     required String socksUsername,
     required String socksPassword,
+    required String customSni,
   }) => '''
 # Logging level [info, debug, trace]
 loglevel = $logLevel
@@ -296,6 +300,7 @@ upstream_fallback_protocol = $upstreamFallbackProtocol
 # Is anti-DPI measures should be enabled
 anti_dpi = $antiDpi
 
+custom_sni = $customSni
 
 # Defines the way to listen to network traffic by the kind of the nested table.
 # Possible types:
